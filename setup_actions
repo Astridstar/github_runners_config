@@ -1,0 +1,24 @@
+# Installation of cert-manager
+
+# Add repository
+helm repo add jetstack https://charts.jetstack.io
+helm repo update
+
+# Install chart
+helm install --wait --create-namespace --namespace cert-manager cert-manager jetstack/cert-manager --version v1.3.0 --set installCRDs=true
+
+# Verify installation
+kubectl --namespace cert-manager get all
+
+
+# Add repository
+helm repo add actions-runner-controller https://actions-runner-controller.github.io/actions-runner-controller
+
+# Install chart
+helm install -f custom-values.yaml --wait --namespace actions-runner-system --create-namespace actions-runner-controller actions-runner-controller/actions-runner-controller
+
+# Verify installation
+$ kubectl --namespace actions-runner-system get all
+
+# Create a namespace to host self-hosted runners resources
+kubectl create namespace self-hosted-runners
